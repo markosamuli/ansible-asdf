@@ -1,0 +1,14 @@
+---
+
+- name: Install dependencies with apt
+  become: True
+  apt:
+    name: "{{ asdf_dependencies }}"
+    update_cache: true
+  when: ansible_os_family == "Debian"
+
+- name: "Clone asdf repository"
+  git:
+    repo: "{{ asdf_git_repo }}"
+    dest: "{{ asdf_dir }}"
+    version: "{{ asdf_version }}"

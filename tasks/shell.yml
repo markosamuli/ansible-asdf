@@ -1,0 +1,53 @@
+---
+
+- name: Set path to .bashrc
+  set_fact:
+    asdf_bashrc_path: "{{ asdf_home }}/.bashrc"
+  when: asdf_bashrc_path is undefined
+
+- name: Check whether .bashrc file exists
+  stat:
+    path: "{{ asdf_bashrc_path }}"
+  register: asdf_bashrc_st
+
+- name: Resolve .bashrc symlink
+  set_fact:
+    asdf_bashrc_path: "{{ asdf_bashrc_st.stat.lnk_source }}"
+  when: asdf_bashrc_st.stat.exists and asdf_bashrc_st.stat.islnk
+
+- name: Load asdf in .bashrc
+  blockinfile:
+    dest: "{{ asdf_bashrc_path }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: asdf"
+    block: |
+      if [ -e "$HOME/.asdf/asdf.sh" ]; then
+        source $HOME/.asdf/asdf.sh
+        source $HOME/.asdf/completions/asdf.bash
+      fi
+  when: asdf_bashrc_st.stat.exists
+
+- name: Set path to .zshrc
+  set_fact:
+    asdf_zshrc_path: "{{ asdf_home }}/.zshrc"
+  when: asdf_zshrc_path is undefined
+
+- name: Check whether .zshrc exists
+  stat:
+    path: "{{ asdf_zshrc_path }}"
+  register: asdf_zshrc_st
+
+- name: Resolve .zshrc symlink
+  set_fact:
+    asdf_zshrc_path: "{{ asdf_zshrc_st.stat.lnk_source }}"
+  when: asdf_zshrc_st.stat.exists and asdf_zshrc_st.stat.islnk
+
+- name: Load asdf in .zshrc
+  blockinfile:
+    dest: "{{ asdf_zshrc_path }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK: asdf"
+    block: |
+      if [ -e "$HOME/.asdf/asdf.sh" ]; then
+        source $HOME/.asdf/asdf.sh
+        source $HOME/.asdf/completions/asdf.bash
+      fi
+  when: asdf_zshrc_st.stat.exists

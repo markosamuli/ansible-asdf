@@ -1,2 +1,14 @@
 ---
 # tasks file for markosamuli.asdf
+
+- name: Load variables for the target system
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Install asdf version manager
+  include_tasks: install.yml
+
+- name: Initialise shell
+  include_tasks: shell.yml
