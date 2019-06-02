@@ -1,11 +1,14 @@
 # markosamuli.asdf
 
+[![Ansible Quality Score](https://img.shields.io/ansible/quality/40885.svg)](https://galaxy.ansible.com/markosamuli/asdf)
+[![Ansible Role](https://img.shields.io/ansible/role/40885.svg)](https://galaxy.ansible.com/markosamuli/asdf)
 [![GitHub release](https://img.shields.io/github/release/markosamuli/ansible-asdf.svg)](https://github.com/markosamuli/ansible-asdf/releases)
 [![License](https://img.shields.io/github/license/markosamuli/ansible-asdf.svg)](https://github.com/markosamuli/ansible-asdf/blob/master/LICENSE)
 
 | Branch  | Status |
 |---------|--------|
-| master  | [![Build Status](https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-asdf)
+| master  | [![Build Status](https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-asdf/branches)
+| develop  | [![Build Status](https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=develop)](https://travis-ci.org/markosamuli/ansible-asdf/branches)
 
 Ansible role for installing [asdf] version manager for the current user.
 
