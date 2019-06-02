@@ -2,3 +2,16 @@
 
 asdf_dependencies:
   - git
+
+asdf_plugin_dependencies:
+  - coreutils
+  - automake
+  - autoconf
+  - openssl
+  - libyaml
+  - readline
+  - libxslt
+  - libtool
+  - unixodbc
+  - unzip
+  - curl
