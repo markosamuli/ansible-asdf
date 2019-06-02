@@ -1,0 +1,53 @@
+---
+
+- name: Install dependencies with apt
+  become: True
+  apt:
+    name: "{{ asdf_plugin_dependencies }}"
+    update_cache: true
+  when: ansible_os_family == "Debian"
+
+- name: Install dependencies with Homebrew
+  homebrew:
+    name: "{{ asdf_plugin_dependencies }}"
+  when: ansible_os_family == "Darwin"
+
+- name: "Install asdf plugins"
+  shell: ". {{ asdf_dir }}/asdf.sh && asdf plugin-add {{ item.name }} {{ item.repository | default() }}"
+  args:
+    executable: "{{ asdf_install_shell | default(omit) }}"
+    creates: "{{ asdf_dir }}/plugins/{{ item.name }}"
+    chdir: "{{ asdf_home }}"
+  with_items: "{{ asdf_plugins }}"
+  ignore_errors: True
+
+- name: "Install asdf packages"
+  shell: ". {{ asdf_dir }}/asdf.sh && asdf install {{ item.0.name }} {{ item.1 }}"
+  args:
+    executable: "{{ asdf_install_shell | default(omit) }}"
+    creates: "{{ asdf_dir }}/installs/{{ item.0.name }}/{{ item.1 }}"
+    chdir: "{{ asdf_home }}"
+  with_subelements:
+    - "{{ asdf_plugins }}"
+    - versions
+    - flags:
+      skip_missing: True
+
+- name: Get current asdf package versions
+  shell: ". {{ asdf_dir }}/asdf.sh && asdf current {{ item.name }} | grep -o '{{ item.global | default(item.versions[0]) }}'"
+  args:
+    executable: "{{ asdf_install_shell | default(omit) }}"
+    chdir: "{{ asdf_home }}"
+  register: asdf_plugins_versions
+  with_items: "{{ asdf_plugins }}"
+  when: item.versions is defined
+  changed_when: False
+  failed_when: False
+
+- name: "Set global asdf package versions"
+  shell: ". {{ asdf_dir }}/asdf.sh && asdf global {{ item.item.name }} {{ item.item.global | default(item.item.versions[0]) }}"
+  args:
+    executable: "{{ asdf_install_shell | default(omit) }}"
+    chdir: "{{ asdf_home }}"
+  when: item.skipped is not defined and item.rc != 0
+  with_items: "{{ asdf_plugins_versions.results }}"

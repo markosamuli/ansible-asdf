@@ -1,19 +1,11 @@
 ---
 
-- name: Load dependencies for the target system
-  include_vars: "{{ item }}"
-  with_first_found:
-    - files:
-      - "deps.{{ ansible_distribution }}.yml"
-      - "deps.{{ ansible_os_family }}.yml"
-      skip: true
-
 - name: Install dependencies with apt
   become: True
   apt:
     name: "{{ asdf_dependencies }}"
     update_cache: true
-  when: ansible_os_family == "Debian"
+  when: ansible_os_family == "Debian" or ansible_os_family == "Pengwin"
 
 - name: Install dependencies with Homebrew
   homebrew:

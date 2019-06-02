@@ -16,3 +16,5 @@ asdf_plugin_dependencies:
   - unixodbc-dev
   - unzip
   - curl
+
+asdf_install_shell: /bin/bash

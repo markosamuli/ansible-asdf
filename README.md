@@ -14,6 +14,23 @@ under user home directory.
 
 [asdf]: https://asdf-vm.com
 
+## Installing plugins and packages
+
+Plugin and package installation and configuration is based on [cimon-io.asdf]
+Ansible role.
+
+```yaml
+asdf_plugins:
+  - name: "erlang"    # a plugin name
+    repository: ""    # a plugin repository, optional
+    versions:         # a list of the package versions to install
+      - 18.3
+      - 20.1
+    global: 20.1      # set as a global version, optional
+```
+
+[cimon-io.asdf]: https://github.com/cimon-io/ansible-role-asdf
+
 ## Updating versions
 
 Run the following scripts to get latest releases from GitHub and update them in

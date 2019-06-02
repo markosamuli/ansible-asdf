@@ -1,7 +1,19 @@
 ---
 
+- name: Load variables for the target system
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+      - "os/{{ ansible_distribution }}.yml"
+      - "os/{{ ansible_os_family }}.yml"
+      skip: true
+
 - name: Install asdf version manager
   include_tasks: install.yml
 
 - name: Initialise shell
   include_tasks: shell.yml
+
+- name: Install plugins and packages
+  include_tasks: plugins.yml
+  when: asdf_plugins|length > 0
