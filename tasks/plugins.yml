@@ -55,7 +55,8 @@
 - name: "Set global asdf package versions"
   shell: >-
     . {{ asdf_dir }}/asdf.sh &&
-    asdf global {{ item.item.name }} {{ item.item.global | default(item.item.versions[0]) }}
+    asdf global {{ item.item.name }}
+    {{ item.item.global | default(item.item.versions[0]) }}
   args:
     executable: "{{ asdf_install_shell | default(omit) }}"
     chdir: "{{ asdf_home }}"
