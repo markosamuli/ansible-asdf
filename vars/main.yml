@@ -1,5 +1,4 @@
 ---
-# vars file for markosamuli.asdf
 
 asdf_git_repo: "https://github.com/asdf-vm/asdf.git"
 asdf_home: "{{ ansible_env.HOME }}"
