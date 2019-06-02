@@ -132,8 +132,21 @@ script:
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
 
-  # Test global python version is defined
-  - . $HOME/.asdf/asdf.sh && asdf version
+  # Test asdf is installed
+  - >
+    . $HOME/.asdf/asdf.sh
+    && asdf --version
+
+  # Test asdf packages installed in test.yml playbook are installed
+  - >
+    . $HOME/.asdf/asdf.sh
+    && asdf current terraform
+  - >
+    . $HOME/.asdf/asdf.sh
+    && asdf current doctl
+  - >
+    . $HOME/.asdf/asdf.sh
+    && asdf current kubectl
 
 notifications:
   webhooks:

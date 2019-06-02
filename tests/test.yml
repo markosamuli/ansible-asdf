@@ -3,4 +3,15 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - ansible-asdf
+    - name: ansible-asdf
+      asdf_plugins:
+        - name: terraform
+          versions:
+            - "0.11.14"
+        - name: doctl
+          versions:
+            - "1.19.0"
+        - name: kubectl
+          versions:
+            - "1.14.2"
+
