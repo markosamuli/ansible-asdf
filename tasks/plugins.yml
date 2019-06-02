@@ -13,7 +13,9 @@
   when: ansible_os_family == "Darwin"
 
 - name: "Install asdf plugins"
-  shell: ". {{ asdf_dir }}/asdf.sh && asdf plugin-add {{ item.name }} {{ item.repository | default() }}"
+  shell: >-
+    . {{ asdf_dir }}/asdf.sh &&
+    asdf plugin-add {{ item.name }} {{ item.repository | default() }}
   args:
     executable: "{{ asdf_install_shell | default(omit) }}"
     creates: "{{ asdf_dir }}/plugins/{{ item.name }}"
@@ -22,7 +24,9 @@
   ignore_errors: True
 
 - name: "Install asdf packages"
-  shell: ". {{ asdf_dir }}/asdf.sh && asdf install {{ item.0.name }} {{ item.1 }}"
+  shell: >-
+    . {{ asdf_dir }}/asdf.sh &&
+    asdf install {{ item.0.name }} {{ item.1 }}
   args:
     executable: "{{ asdf_install_shell | default(omit) }}"
     creates: "{{ asdf_dir }}/installs/{{ item.0.name }}/{{ item.1 }}"
@@ -34,7 +38,10 @@
       skip_missing: True
 
 - name: Get current asdf package versions
-  shell: ". {{ asdf_dir }}/asdf.sh && asdf current {{ item.name }} | grep -o '{{ item.global | default(item.versions[0]) }}'"
+  shell: >-
+    . {{ asdf_dir }}/asdf.sh &&
+    asdf current {{ item.name }} |
+    grep -o '{{ item.global | default(item.versions[0]) }}'
   args:
     executable: "{{ asdf_install_shell | default(omit) }}"
     chdir: "{{ asdf_home }}"
@@ -45,7 +52,9 @@
   failed_when: False
 
 - name: "Set global asdf package versions"
-  shell: ". {{ asdf_dir }}/asdf.sh && asdf global {{ item.item.name }} {{ item.item.global | default(item.item.versions[0]) }}"
+  shell: >-
+    . {{ asdf_dir }}/asdf.sh &&
+    asdf global {{ item.item.name }} {{ item.item.global | default(item.item.versions[0]) }}
   args:
     executable: "{{ asdf_install_shell | default(omit) }}"
     chdir: "{{ asdf_home }}"
