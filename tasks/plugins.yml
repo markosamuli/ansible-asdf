@@ -39,6 +39,7 @@
 
 - name: Get current asdf package versions
   shell: >-
+    set -o pipefail &&
     . {{ asdf_dir }}/asdf.sh &&
     asdf current {{ item.name }} |
     grep -o '{{ item.global | default(item.versions[0]) }}'
