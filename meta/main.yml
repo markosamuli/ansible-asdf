@@ -1,4 +1,7 @@
+# -*- mode: yaml -*-
+# vim:ts=2:sw=2:ai:si:syntax=yaml
 ---
+
 galaxy_info:
   role_name: asdf
   author: Marko Samuli Kirves
@@ -7,14 +10,14 @@ galaxy_info:
   min_ansible_version: 2.4
   github_branch: master
   platforms:
-   - name: Debian
-     versions:
-     - buster
-     - stretch
-   - name: Ubuntu
-     versions:
-     - xenial
-     - bionic
+    - name: Debian
+      versions:
+        - buster
+        - stretch
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
   galaxy_tags:
     - asdf
 dependencies: []

@@ -4,8 +4,8 @@
   include_vars: "{{ item }}"
   with_first_found:
     - files:
-      - "os/{{ ansible_distribution }}.yml"
-      - "os/{{ ansible_os_family }}.yml"
+        - "os/{{ ansible_distribution }}.yml"
+        - "os/{{ ansible_os_family }}.yml"
       skip: true
 
 - name: Install asdf version manager
