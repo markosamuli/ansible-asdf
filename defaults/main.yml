@@ -1,13 +1,7 @@
 ---
-# defaults file for markosamuli.asdf
 
+# asdf version to install
 asdf_version: "v0.7.2"
 
+# see README.md for example configuration
 asdf_plugins: []
-# asdf_plugins:
-#   - name: "erlang"
-#     repository: ""
-#     versions:
-#       - 18.3
-#       - 20.1
-#     global: 20.1

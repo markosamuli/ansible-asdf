@@ -21,12 +21,11 @@ Ansible role.
 
 ```yaml
 asdf_plugins:
-  - name: "erlang"    # a plugin name
-    repository: ""    # a plugin repository, optional
-    versions:         # a list of the package versions to install
-      - 18.3
-      - 20.1
-    global: 20.1      # set as a global version, optional
+  - name: "terraform"    # a plugin name
+    repository: ""       # a plugin repository, optional
+    versions:            # a list of the package versions to install
+      - "0.11.14"
+    global: "0.11.14"    # set as a global version, optional
 ```
 
 [cimon-io.asdf]: https://github.com/cimon-io/ansible-role-asdf
