@@ -6,7 +6,11 @@
 ---
 
 language: generic
-python: "2.7"
+
+# Run tests against pull requests and main branches only
+if: |
+  type = pull_request OR \
+  branch IN (master, develop)
 
 matrix:
   include:
@@ -60,14 +64,6 @@ addons:
       - ansible
       - pre-commit
     update: true
-
-branches:
-  only:
-    - master
-    - develop
-    - /^feature\/.*$/
-    - /^bugfix\/.*$/
-    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 
 cache:
   directories:
