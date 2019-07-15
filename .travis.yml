@@ -38,7 +38,7 @@ matrix:
     - name: "macOS 10.12 (Sierra) with Xcode 9.2"
       os: osx
       osx_image: xcode9.2
-      env: BREW_UPGRADE=yes RVM_GPG_IMPORT=yes
+      env: RVM_GPG_IMPORT=yes
     - name: "macOS 10.13 (High Sierra) with Xcode 9.4"
       os: osx
       osx_image: xcode9.4
@@ -59,6 +59,7 @@ addons:
     packages:
       - ansible
       - pre-commit
+    update: true
 
 branches:
   only:
@@ -82,15 +83,6 @@ before_install:
       command curl -sSL https://rvm.io/mpapis.asc | gpg --import -
     fi
 
-  # Update Homebrew to fix HOMEBREW_LOGS error
-  - if [[ "$BREW_UPGRADE" == "yes" ]]; then brew update; fi
-
-  # Upgrade Ansible with installed Homebrew
-  - if [[ "$BREW_UPGRADE" == "yes" ]]; then brew upgrade ansible; fi
-
-  # Upgrade pre-commit installed with Homebrew
-  - if [[ "$BREW_UPGRADE" == "yes" ]]; then brew upgrade pre-commit; fi
-
 install:
   # Install Ansible with pip on Ubuntu
   - >
@@ -112,7 +104,10 @@ install:
 
 before_script:
   # https://github.com/travis-ci/travis-ci/issues/6307
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then rvm get head || true; fi
+  - >
+    if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+      rvm get head || true
+    fi
 
 script:
   # Run pre-commit hooks
