@@ -7,3 +7,6 @@ asdf_version: "v0.7.2"
 
 # see README.md for example configuration
 asdf_plugins: []
+
+# Configure shell
+asdf_init_shell: true

@@ -17,6 +17,16 @@ under user home directory.
 
 [asdf]: https://asdf-vm.com
 
+## Role Variables
+
+Set `asdf_init_shell` to `false` if you're for example managing your shell
+rc files using your own .dotfiles repository.
+
+```yaml
+# Configure shell rc files
+asdf_init_shell: true
+```
+
 ## Installing plugins and packages
 
 Plugin and package installation and configuration is based on [cimon-io.asdf]

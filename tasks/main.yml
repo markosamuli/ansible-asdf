@@ -13,6 +13,7 @@
 
 - name: Initialise shell
   include_tasks: shell.yml
+  when: asdf_init_shell | bool
 
 - name: Install plugins and packages
   include_tasks: plugins.yml
