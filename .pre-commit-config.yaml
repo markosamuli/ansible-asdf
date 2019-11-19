@@ -11,6 +11,8 @@ repos:
     hooks:
       - id: trailing-whitespace
       - id: check-yaml
+      - id: pretty-format-json
+        args: ['--autofix', '--indent=2', '--no-sort-keys']
 
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.16.0
