@@ -5,53 +5,12 @@
 # https://docs.travis-ci.com/
 ---
 
-language: generic
-
 # Run tests against pull requests and main branches only
 if: |
   type = pull_request OR \
   branch IN (master, develop)
 
-matrix:
-  include:
-    - name: "Ubuntu 16.04 (Xenial) with Ansible 2.4"
-      os: linux
-      dist: xenial
-      sudo: required
-      env: ANSIBLE_VERSION='<2.5.0'
-    - name: "Ubuntu 16.04 (Xenial) with Ansible 2.5"
-      os: linux
-      dist: xenial
-      sudo: required
-      env: ANSIBLE_VERSION='<2.6.0'
-    - name: "Ubuntu 16.04 (Xenial) with Ansible 2.6"
-      os: linux
-      dist: xenial
-      sudo: required
-      env: ANSIBLE_VERSION='<2.7.0'
-    - name: "Ubuntu 16.04 (Xenial) with Ansible 2.7"
-      os: linux
-      dist: xenial
-      sudo: required
-      env: ANSIBLE_VERSION='<2.8.0'
-    - name: "Ubuntu 16.04 (Xenial) with Ansible 2.8"
-      os: linux
-      dist: xenial
-      sudo: required
-      env: ANSIBLE_VERSION='<2.9.0'
-    - name: "macOS 10.12 (Sierra) with Xcode 9.2"
-      os: osx
-      osx_image: xcode9.2
-      env: RVM_GPG_IMPORT=yes
-    - name: "macOS 10.13 (High Sierra) with Xcode 9.4"
-      os: osx
-      osx_image: xcode9.4
-    - name: "macOS 10.13 (High Sierra) with Xcode 10.1"
-      os: osx
-      osx_image: xcode10.1
-    - name: "macOS 10.14 (Mojave) with Xcode 10.2 beta"
-      os: osx
-      osx_image: xcode10.2
+language: generic
 
 # Install Ansible and Python development packages
 addons:
@@ -59,18 +18,13 @@ addons:
     packages:
       - python-pip
       - python-dev
+      - shellcheck
+  snaps:
+    - shfmt
   homebrew:
     packages:
       - ansible
-      - pre-commit
     update: true
-
-cache:
-  directories:
-    - $HOME/.cache/pre-commit/
-
-before_cache:
-  - rm -f $HOME/.cache/pre-commit/pre-commit.log
 
 before_install:
   # Import new GPG key for RVM when necessary
@@ -83,13 +37,11 @@ install:
   # Install Ansible with pip on Ubuntu
   - >
     if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
-      pip install --user ansible${ANSIBLE_VERSION}
-    fi
-
-  # Install pre-commit with pip on Ubuntu
-  - >
-    if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then
-      pip install --user pre-commit
+      if [[ -z "$ANSIBLE_VERSION" ]]; then
+        pip install --user ansible
+      else
+        pip install --user ansible${ANSIBLE_VERSION}
+      fi
     fi
 
   # Check Ansible version
@@ -106,8 +58,6 @@ before_script:
     fi
 
 script:
-  # Run pre-commit hooks
-  - pre-commit run -a
 
   # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
@@ -138,6 +88,67 @@ script:
   - >
     . $HOME/.asdf/asdf.sh
     && asdf current kubectl
+
+stages:
+  - validate
+  - test
+
+jobs:
+  include:
+
+    # Run validation stage in Linux with latest Ansible only
+    - stage: validate
+      name: Validate with pre-commit
+      os: linux
+      dist: xenial
+      language: minimal
+      cache:
+        directories:
+          - $HOME/.cache/pre-commit/
+      before_cache:
+        - rm -f $HOME/.cache/pre-commit/pre-commit.log
+      install:
+        # Fix ansible-lint installation issues
+        # https://github.com/ansible/ansible-lint/issues/590
+        - pip install --user virtualenv==16.3.0
+        # Install pre-commit with pip
+        - pip install --user pre-commit
+      script:
+        - pre-commit run -a
+
+    # Run tests
+    - stage: test
+      name: "Ubuntu 16.04 (Xenial) with Ansible 2.6"
+      os: linux
+      dist: xenial
+      env: ANSIBLE_VERSION='<2.7.0'
+    - stage: test
+      name: "Ubuntu 16.04 (Xenial) with Ansible 2.7"
+      os: linux
+      dist: xenial
+      env: ANSIBLE_VERSION='<2.8.0'
+    - stage: test
+      name: "Ubuntu 16.04 (Xenial) with Ansible 2.8"
+      os: linux
+      dist: xenial
+      env: ANSIBLE_VERSION='<2.9.0,!=2.8.6'
+    - stage: test
+      name: "macOS 10.12 (Sierra) with Xcode 9.2"
+      os: osx
+      osx_image: xcode9.2
+      env: RVM_GPG_IMPORT=yes
+    - stage: test
+      name: "macOS 10.13 (High Sierra) with Xcode 9.4"
+      os: osx
+      osx_image: xcode9.4
+    - stage: test
+      name: "macOS 10.13 (High Sierra) with Xcode 10.1"
+      os: osx
+      osx_image: xcode10.1
+    - stage: test
+      name: "macOS 10.14 (Mojave) with Xcode 10.2.1"
+      os: osx
+      osx_image: xcode10.2
 
 notifications:
   webhooks:
