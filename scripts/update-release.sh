@@ -9,7 +9,7 @@ source "${SCRIPTS_DIR}/utils.sh"
 # Update asdf version
 update_asdf_version() {
     local version=$1
-    update_default_variable "asdf_version" "${version}"
+    update_variable "asdf_version" "${version}"
 }
 
 # Get latest asdf version
@@ -42,16 +42,9 @@ update_versions() {
     fi
 }
 
-check_requirements() {
-    command -v curl >/dev/null || {
-        error "curl is not installed"
-        exit 1
-    }
-}
-
 set -e
 
 cd "${PROJECT_ROOT}"
 
-check_requirements
+check_curl
 update_versions "$1"

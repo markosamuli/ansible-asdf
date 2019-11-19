@@ -31,18 +31,18 @@ get_latest_tag() {
         url="${url}&access_token=${GITHUB_OAUTH_TOKEN}"
     fi
     if test "$(uname)" = "Darwin"; then
-        curl --silent "${url}" | \
-            grep '"name":' | \
+        curl --silent "${url}" |
+            grep '"name":' |
             sed -E 's/.*"([^"]+)".*/\1/'
     else
-        curl --silent "${url}" | \
-            grep '"name":' | \
+        curl --silent "${url}" |
+            grep '"name":' |
             sed -r 's/.*"([^"]+)".*/\1/'
     fi
 }
 
 # Update Ansible variable in defaults/main.yml
-update_default_variable() {
+update_variable() {
     local key=$1
     local value=$2
     local file=defaults/main.yml
@@ -54,4 +54,20 @@ update_default_variable() {
             "${file}"
     fi
     rm "${file}.save"
+}
+
+# Check cURL is installed
+check_curl() {
+    command -v curl >/dev/null || {
+        error "cURL is not installed"
+        exit 1
+    }
+}
+
+# Check jq is installed
+check_jq() {
+    command -v jq >/dev/null || {
+        error "jq not installed"
+        exit 1
+    }
 }
