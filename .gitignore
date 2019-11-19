@@ -1,2 +1,10 @@
+# Ignore Ansible files generated during development and testing
 *.retry
 ansible.cfg
+
+# IDEs
+.vscode/*
+!.vscode/cSpell.json
+
+# pyenv
+.python-version
