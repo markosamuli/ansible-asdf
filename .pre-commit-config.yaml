@@ -26,6 +26,7 @@ repos:
   - repo: https://github.com/syntaqx/git-hooks
     rev: v0.0.16
     hooks:
+      - id: shellcheck
       - id: shfmt
         args: ['-l', '-i', '4', '-ci', '-w']
 
