@@ -23,10 +23,11 @@ repos:
       - id: ansible-lint
         files: \.(yaml|yml)$
 
-  - repo: https://github.com/bemeurer/beautysh.git
-    rev: '4.1'
+  - repo: https://github.com/syntaqx/git-hooks
+    rev: v0.0.16
     hooks:
-      - id: beautysh
+      - id: shfmt
+        args: ['-l', '-i', '4', '-ci', '-w']
 
   - repo: https://github.com/openstack-dev/bashate.git
     rev: '0.6.0'
