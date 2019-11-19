@@ -9,7 +9,15 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
     rev: v2.2.3
     hooks:
+      - id: check-executables-have-shebangs
+      - id: check-byte-order-marker
+      - id: check-case-conflict
+      - id: check-merge-conflict
       - id: trailing-whitespace
+        args: ['--markdown-linebreak-ext=md']
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: ['--fix=lf']
       - id: check-yaml
       - id: pretty-format-json
         args: ['--autofix', '--indent=2', '--no-sort-keys']
