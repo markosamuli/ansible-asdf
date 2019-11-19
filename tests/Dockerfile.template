@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM %%FROM%%
 
 RUN apt-get update && apt-get install -y \
     python-minimal \
@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install -y \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-ARG user=test
-ARG repository=ansible-asdf
+ARG user=%%USER%%
+ARG repository=%%REPOSITORY%%
 
 # Create test user
 RUN useradd -m ${user} -s /bin/bash \
@@ -25,7 +25,7 @@ RUN mkdir -p /home/${user}/${repository} \
  && chown -R ${user}:${user} /home/${user}/${repository}
 VOLUME ["/home/${user}/${repository}"]
 
-ARG ansible_version="<2.9.0,!=2.8.6"
+ARG ansible_version="%%ANSIBLE_VERSION%%"
 ENV ANSIBLE_VERSION="${ansible_version}"
 RUN pip install ansible${ANSIBLE_VERSION}
 
