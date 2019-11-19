@@ -1,9 +1,8 @@
 # -*- mode: yaml -*-
 # vim:ts=2:sw=2:ai:si:syntax=yaml
-#
-# pre-commit hook configuration
-# https://pre-commit.com/
 ---
+
+minimum_pre_commit_version: 1.16.1
 
 repos:
 
