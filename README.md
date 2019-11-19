@@ -51,7 +51,7 @@ role defaults.
 Update [asdf] release:
 
 ```bash
-./update-release asdf
+make update
 ```
 
 ## License
