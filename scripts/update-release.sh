@@ -9,7 +9,7 @@ source "${SCRIPTS_DIR}/utils.sh"
 # Update asdf version
 update_asdf_version() {
     local version=$1
-    update_variable "asdf_version" "${version}"
+    update_default_variable "asdf_version" "${version}"
 }
 
 # Get latest asdf version
