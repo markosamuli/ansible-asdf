@@ -138,9 +138,9 @@ jobs:
       os: osx
       osx_image: xcode10.1
     - stage: test
-      name: "macOS 10.14 (Mojave) with Xcode 10.2.1"
+      name: "macOS 10.14 (Mojave) with Xcode 11.2"
       os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.2
 
 notifications:
   webhooks:
