@@ -128,9 +128,9 @@ jobs:
       dist: xenial
       env: ANSIBLE_VERSION='<2.8.0'
     - stage: test
-      name: "Ubuntu 16.04 (Xenial) with Ansible 2.8"
+      name: "Ubuntu 18.04 (Bionic) with Ansible 2.8"
       os: linux
-      dist: xenial
+      dist: bionic
       env: ANSIBLE_VERSION='<2.9.0,!=2.8.6'
     - stage: test
       name: "macOS 10.12 (Sierra) with Xcode 9.2"
