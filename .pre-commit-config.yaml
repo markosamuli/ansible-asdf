@@ -1,20 +1,28 @@
 # -*- mode: yaml -*-
 # vim:ts=2:sw=2:ai:si:syntax=yaml
-#
-# pre-commit hook configuration
-# https://pre-commit.com/
 ---
 
-repos:
+minimum_pre_commit_version: 1.16.1
 
+repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
-    rev: v2.1.0
+    rev: v2.2.3
     hooks:
+      - id: check-executables-have-shebangs
+      - id: check-byte-order-marker
+      - id: check-case-conflict
+      - id: check-merge-conflict
       - id: trailing-whitespace
+        args: ['--markdown-linebreak-ext=md']
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+        args: ['--fix=lf']
       - id: check-yaml
+      - id: pretty-format-json
+        args: ['--autofix', '--indent=2', '--no-sort-keys']
 
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.15.0
+    rev: v1.16.0
     hooks:
       - id: yamllint
 
@@ -24,10 +32,12 @@ repos:
       - id: ansible-lint
         files: \.(yaml|yml)$
 
-  - repo: https://github.com/bemeurer/beautysh.git
-    rev: '4.1'
+  - repo: https://github.com/syntaqx/git-hooks
+    rev: v0.0.16
     hooks:
-      - id: beautysh
+      - id: shellcheck
+      - id: shfmt
+        args: ['-l', '-i', '4', '-ci', '-w']
 
   - repo: https://github.com/openstack-dev/bashate.git
     rev: '0.6.0'
@@ -35,6 +45,13 @@ repos:
       - id: bashate
 
   - repo: https://github.com/igorshubovych/markdownlint-cli.git
-    rev: 'v0.15.0'
+    rev: v0.17.0
     hooks:
       - id: markdownlint
+
+  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook.git
+    rev: '2.0.0'
+    hooks:
+      - id: commitlint
+        stages: [commit-msg]
+        additional_dependencies: ['@commitlint/config-conventional']

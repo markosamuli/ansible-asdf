@@ -7,7 +7,7 @@ galaxy_info:
   author: Marko Samuli Kirves
   description: Installs asdf version manager
   license: MIT
-  min_ansible_version: 2.4
+  min_ansible_version: 2.6
   github_branch: master
   platforms:
     - name: Debian
@@ -18,6 +18,10 @@ galaxy_info:
       versions:
         - xenial
         - bionic
+    - name: MacOSX
+      versions:
+        - '10.13'
+        - '10.14'
   galaxy_tags:
     - asdf
 dependencies: []
