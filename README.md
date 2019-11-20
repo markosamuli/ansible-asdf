@@ -5,10 +5,16 @@
 [![GitHub release](https://img.shields.io/github/release/markosamuli/ansible-asdf.svg)](https://github.com/markosamuli/ansible-asdf/releases)
 [![License](https://img.shields.io/github/license/markosamuli/ansible-asdf.svg)](https://github.com/markosamuli/ansible-asdf/blob/master/LICENSE)
 
-| Branch  | Status |
-|---------|--------|
-| master  | [![Build Status](https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-asdf/branches)
-| develop  | [![Build Status](https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=develop)](https://travis-ci.org/markosamuli/ansible-asdf/branches)
+| Branch  | Travis Builds | Code Quality |
+|---------|--------|--------------|
+| master  | [![Build Status][travis-master]][travis] | ![Build Status][gh-master] |
+| develop | [![Build Status][travis-develop]][travis] | ![Build Status][gh-develop] |
+
+[travis]: https://travis-ci.org/markosamuli/ansible-asdf/branches
+[travis-master]: https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=master
+[travis-develop]: https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=develop
+[gh-master]: https://github.com/markosamuli/ansible-asdf/workflows/Code%20Quality/badge.svg?branch=master
+[gh-develop]: https://github.com/markosamuli/ansible-asdf/workflows/Code%20Quality/badge.svg?branch=develop
 
 Ansible role for installing [asdf] version manager for the current user.
 
